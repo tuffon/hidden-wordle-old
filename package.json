@@ -2,7 +2,7 @@
   "name": "wordle-extreme",
   "version": "0.0.0",
   "scripts": {
-    "dev:vite": "vite --port $PORT",
+    "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
