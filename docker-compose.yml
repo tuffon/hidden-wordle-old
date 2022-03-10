@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: .
-    image: vvurdle-web:latest
+    image: wordle-extreme-web:latest
     restart: always
     ports:
       - 3000:3000

@@ -7,9 +7,6 @@
 
 <script setup lang="ts">
 import { PhGithubLogo } from "phosphor-vue"
-
-const creator = "Jordan Shatford"
-const githubLink = "https://github.com/jordanshatford/vvurdle"
 </script>
 
 <style scoped lang="scss">
