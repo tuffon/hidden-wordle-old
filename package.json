@@ -2,13 +2,14 @@
   "name": "wordle-extreme",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev:vite": "vite --port $PORT",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vercel/node": "^1.13.0",
     "phosphor-vue": "^4.4.0",
     "vue": "^3.2.31",
     "wordlist-js": "^1.2.1"
