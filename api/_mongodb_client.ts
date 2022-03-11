@@ -1,8 +1,7 @@
 "use strict"
 // Import the dependency.
 import { MongoClient, MongoClientOptions } from "mongodb"
-const uri =
-  "mongodb+srv://application:Lmabkn067AP@cluster0.xwl5x.mongodb.net/wordle_extreme?retryWrites=true&w=majority"
+const uri = process.env.MONGODB_URI
 const options: MongoClientOptions = {}
 let client
 let clientPromise

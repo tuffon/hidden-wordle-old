@@ -1,6 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node"
-
 import clientPromise from "./_mongodb_client"
+import dotenv from "dotenv"
+
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config()
+}
 
 async function setWordsUnused(words) {
   await words.updateMany({}, { $set: { used: false, current: false } })
