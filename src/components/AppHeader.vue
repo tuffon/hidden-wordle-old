@@ -1,6 +1,6 @@
 <template>
   <header class="appheader">
-    <p class="appheader__text typed-out">Hidden Wordle</p>
+    <p class="appheader__text typed-out">Hidden W<span><img style="height: 45px; width: 45px; padding-top: 7px" src="../assets/bahai-2662560-2217436.webp"></span>rdle</p>
   </header>
 </template>
 
