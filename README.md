@@ -1,4 +1,4 @@
-# Wordle Extreme
+# Hidden Wordle
 
 [![Powered By Vue](https://img.shields.io/badge/powered%20by-Vue-%23#4FC08D.svg?style=flat&logo=Vue.js)](https://kit.svelte.dev/)
 [![Language: TypeScript](https://img.shields.io/badge/language-typescript-%233178C6.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/)
@@ -8,7 +8,7 @@
 [![Hosted On Vercel](https://img.shields.io/badge/hosted%20on-vercel-%23000000.svg?style=flat&logo=vercel)](https://vercel.com/)
 
 
-Wordle Extreme is [Wordle](https://www.nytimes.com/games/wordle/index.html) clone written in Vue.
+Hidden Wordle is [Wordle](https://www.nytimes.com/games/wordle/index.html) clone written in Vue.
 
 ## Screenshot
 ![readme-image](./src/assets/example.png)

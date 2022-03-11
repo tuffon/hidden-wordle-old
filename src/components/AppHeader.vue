@@ -1,6 +1,6 @@
 <template>
   <header class="appheader">
-    <p class="appheader__text typed-out">Wordle Extreme</p>
+    <p class="appheader__text typed-out">Hidden Wordle</p>
   </header>
 </template>
 

@@ -1,4 +1,4 @@
-# Wordle Extreme Frontend
+# Hidden Wordle Frontend
 
 The frontend for this project is written using the popular javascript framework [Vue](https://vuejs.org/).
 
