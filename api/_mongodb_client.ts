@@ -2,6 +2,8 @@
 // Import the dependency.
 import { MongoClient, MongoClientOptions } from "mongodb"
 const uri = process.env.MONGODB_URI
+console.log(uri)
+console.info(uri)
 console.debug(uri)
 const options: MongoClientOptions = {}
 let client
