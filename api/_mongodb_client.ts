@@ -2,6 +2,7 @@
 // Import the dependency.
 import { MongoClient, MongoClientOptions } from "mongodb"
 const uri = process.env.MONGODB_URI
+console.debug(uri)
 const options: MongoClientOptions = {}
 let client
 let clientPromise
@@ -15,7 +16,6 @@ if (process.env.NODE_ENV === "development") {
   clientPromise = global._mongoClientPromise
 } else {
   // In production mode, it's best to not use a global variable.
-  console.debug(uri)
   client = new MongoClient(uri, options)
   clientPromise = client.connect()
 }
