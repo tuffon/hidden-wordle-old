@@ -3,12 +3,6 @@
     <div class="gamesettings__text">
       <section class="gamesettings__settings">
         <article class="gamesettings__settings__setting">
-          <span>Current Word: </span>
-          <span>
-            <blurred-word @unblur="emits('checkedword')">{{ word }}</blurred-word>
-          </span>
-        </article>
-        <article class="gamesettings__settings__setting">
           <span>Word Length:</span>
           <span>
             <select name="wordlengths" :value="length" @input="emitUpdateLength($event.target)">
