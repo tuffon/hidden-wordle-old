@@ -24,12 +24,12 @@ async function chooseNewWordAndQuote(quotes, words) {
   start.setUTCHours(0, 0, 0, 0)
 
   // choose a word
-  let availableWords = await words.find({ used: false }).toArray()
+  let availableWords = await words.find({ used: false, length: 5 }).toArray()
   if (availableWords.length == 0) {
     // if all words have been used, set all quotes and words to unused
     await setWordsUnused(words)
     await setQuotesUnused(quotes)
-    availableWords = await words.find({ used: false }).toArray()
+    availableWords = await words.find({ used: false, length: 5 }).toArray()
   }
   const chosenIdx = Math.floor(Math.random() * availableWords.length)
 
