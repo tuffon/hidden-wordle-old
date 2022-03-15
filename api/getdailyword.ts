@@ -31,20 +31,20 @@ async function chooseNewWordAndQuote(quotes, words, length: number) {
     await setQuotesUnused(quotes)
     availableWords = await words.find({ used: false, length: length }).toArray()
   }
-  const chosenId = Math.floor(Math.random() * availableWords.length)
+  const chosenIdx = Math.floor(Math.random() * availableWords.length)
 
   // choose a quote
-  let availableQuotes = await quotes.find({ used: false, id: { $in: availableWords[chosenId].quote_ids } }).toArray()
+  let availableQuotes = await quotes.find({ used: false, id: { $in: availableWords[chosenIdx].quote_ids } }).toArray()
   if (availableQuotes.length == 0) {
     // if all quotes for this word have been used, set all of those quotes to unused
-    await setQuotesUnused(quotes, availableWords[chosenId].quote_ids)
-    availableQuotes = await quotes.find({ used: false, id: { $in: availableWords[chosenId].quote_ids } }).toArray()
+    await setQuotesUnused(quotes, availableWords[chosenIdx].quote_ids)
+    availableQuotes = await quotes.find({ used: false, id: { $in: availableWords[chosenIdx].quote_ids } }).toArray()
   }
-  const quoteId = Math.floor(Math.random() * availableQuotes.length)
+  const quoteIdx = Math.floor(Math.random() * availableQuotes.length)
 
   // set the word as chosen
   await words.updateOne(
-    { id: chosenId },
+    { id: availableWords[chosenIdx].id },
     {
       $set: { current: true, selectedDate: start },
     }
@@ -52,7 +52,7 @@ async function chooseNewWordAndQuote(quotes, words, length: number) {
 
   // set the quote as chosen
   await quotes.updateOne(
-    { id: availableQuotes[quoteId].id },
+    { id: availableQuotes[quoteIdx].id },
     {
       $set: { current: true },
     }
@@ -83,7 +83,9 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   const quotes = db.collection("quotes")
   const words = db.collection("words")
 
-  // await removeCurrentWordAndQuote(quotes, words)
+  await removeCurrentWordAndQuote(quotes, words)
+  response.status(200).json({})
+  return
 
   const { lengthStr } = request.query
   let length: number
