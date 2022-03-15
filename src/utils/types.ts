@@ -62,3 +62,8 @@ export interface GameResult {
   score: number
   cheated: boolean
 }
+
+export interface ApiResult {
+  current_word: string
+  current_quote: string
+}

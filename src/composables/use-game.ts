@@ -16,7 +16,6 @@ export function useGame(wordLength = ref(5)) {
     isCorrect,
     getScore,
     getEvaluations,
-    reset: resetWordle,
   } = useWordle(wordLength)
   const boardDimensions = ref({
     width: wordLength.value,
@@ -69,7 +68,6 @@ export function useGame(wordLength = ref(5)) {
     gameOver.value = false
     cheated.value = false
     result.value = undefined
-    resetWordle()
     resetKeyboard()
     resetBoard()
   }
@@ -87,7 +85,7 @@ export function useGame(wordLength = ref(5)) {
       }
       result.value = {
         status: GameStatus.WIN,
-        word: word.value,
+        word: word,
         streak: streak.value,
         guesses: currentRow.value + 1,
         score: getScore(currentRow.value),
@@ -101,7 +99,7 @@ export function useGame(wordLength = ref(5)) {
       result.value = {
         status: GameStatus.LOSS,
         streak: 0,
-        word: word.value,
+        word: word,
         guesses: currentRow.value + 1,
         score: 0,
         cheated: cheated.value,
@@ -116,8 +114,8 @@ export function useGame(wordLength = ref(5)) {
       if (oldValue.length < newValue.length) {
         return
       }
-      const startIndex = currentRow.value * word.value.length
-      const endIndex = startIndex + word.value.length
+      const startIndex = currentRow.value * word.length
+      const endIndex = startIndex + word.length
       for (let i = startIndex; i < endIndex; i++) {
         updateCell(i, { wiggle: true })
       }

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { EvaluationState } from "@/utils/types"
+import { EvaluationState, ApiResult } from "@/utils/types"
 import { computed, ref } from "vue"
 import {
   english10,
@@ -32,12 +32,12 @@ const allWords = [
 ]
 const uniqueWords = [...new Set(allWords)].map((w) => w.toUpperCase())
 
-function getData() {
+function getData(): ApiResult {
   let data
   axios.get('/api/getdailyword').then((res) => {
     data = res.data
   })
-  return data
+  return data || { current_word: "test", current_quote: "blastoff" }
 }
 
 function getValidWords(length: number) {
@@ -49,11 +49,11 @@ export function useWordle(length = ref(5)) {
   const availableLengths = [3, 4, 5, 6, 7, 8]
   const validWords = ref(getValidWords(length.value))
   const data = getData()
-  const word = data.current_word
-  const quote = data.current_quote
+  const word = data?.current_word
+  const quote = data?.current_quote
 
   const numGuesses = computed(() => {
-    return word.value.length + 1
+    return word.length + 1
   })
 
   function isValid(w: string) {
@@ -61,7 +61,7 @@ export function useWordle(length = ref(5)) {
   }
 
   function isCorrect(w: string) {
-    return w === word.value
+    return w === word
   }
 
   function getScore(guessesMade: number) {
@@ -70,7 +70,7 @@ export function useWordle(length = ref(5)) {
 
   function getEvaluations(inputWord: string): EvaluationState[] {
     const inputArray = inputWord.split("")
-    const wordArray = word.value.split("")
+    const wordArray = word.split("")
     const evaluations: EvaluationState[] = []
     inputArray.forEach((letter, lIndex) => {
       let evaluation = EvaluationState.UNKNOWN
@@ -99,11 +99,6 @@ export function useWordle(length = ref(5)) {
     return evaluations
   }
 
-  function reset() {
-    validWords.value = getValidWords(length.value)
-    word.value = getData().current_word
-  }
-
   return {
     length,
     word,
@@ -113,6 +108,5 @@ export function useWordle(length = ref(5)) {
     isCorrect,
     getScore,
     getEvaluations,
-    reset,
   }
 }
