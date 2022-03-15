@@ -83,9 +83,8 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   const quotes = db.collection("quotes")
   const words = db.collection("words")
 
-  await removeCurrentWordAndQuote(quotes, words)
-  response.status(200).json({})
-  return
+  // await removeCurrentWordAndQuote(quotes, words)
+  // response.status(200).json({})
 
   const { lengthStr } = request.query
   let length: number
