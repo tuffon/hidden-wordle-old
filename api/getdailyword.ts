@@ -18,18 +18,18 @@ async function setQuotesUnused(quotes, ids = null) {
   }
 }
 
-async function chooseNewWordAndQuote(quotes, words, length: number) {
+async function chooseNewWordAndQuote(quotes, words) {
   // get time at start of current 24 hours
   const start = new Date()
   start.setUTCHours(0, 0, 0, 0)
 
   // choose a word
-  let availableWords = await words.find({ used: false, length: length }).toArray()
+  let availableWords = await words.find({ used: false }).toArray()
   if (availableWords.length == 0) {
     // if all words have been used, set all quotes and words to unused
     await setWordsUnused(words)
     await setQuotesUnused(quotes)
-    availableWords = await words.find({ used: false, length: length }).toArray()
+    availableWords = await words.find({ used: false }).toArray()
   }
   const chosenIdx = Math.floor(Math.random() * availableWords.length)
 
@@ -87,24 +87,20 @@ export default async (request: VercelRequest, response: VercelResponse) => {
   // response.status(200).json({})
   // return
 
-  const { lengthStr } = request.query
-  let length: number
-  if (!lengthStr) length = 5
-  else length = parseInt(lengthStr as string)
   // get the current word and quote of the day
   const currentWords = await words.find({ current: true }).toArray()
 
   let currentWord, currentQuote
   // check if the current word and quote of the day needs to be updated. if so, do it
   if (currentWords.length == 0) {
-    ;[currentWord, currentQuote] = await chooseNewWordAndQuote(quotes, words, length)
+    ;[currentWord, currentQuote] = await chooseNewWordAndQuote(quotes, words)
   } else if (currentWords.length == 1) {
     // check if 24 hours has passed since the word
     const selectedDate = new Date(currentWords[0].selectedDate)
 
     if (hasADayPassed(selectedDate)) {
       await removeCurrentWordAndQuote(quotes, words)
-      ;[currentWord, currentQuote] = await chooseNewWordAndQuote(quotes, words, length)
+      ;[currentWord, currentQuote] = await chooseNewWordAndQuote(quotes, words)
     } else {
       currentWord = currentWords[0].word
       currentQuote = (await quotes.findOne({ current: true })).quote
@@ -113,7 +109,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
     // resolve the error case where there's more than 1 current word by removing all of them and choosing a new one
     // TODO temp solution, think of more elegant resolution
     await removeCurrentWordAndQuote(quotes, words)
-    ;[currentWord, currentQuote] = await chooseNewWordAndQuote(quotes, words, length)
+    ;[currentWord, currentQuote] = await chooseNewWordAndQuote(quotes, words)
   }
 
   // return the word and the quote
