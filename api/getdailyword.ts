@@ -58,7 +58,7 @@ async function chooseNewWordAndQuote(quotes, words, length: number) {
     }
   )
 
-  return [availableWords[chosenId].word, availableQuotes[quoteId].quote]
+  return [availableWords[chosenIdx].word, availableQuotes[quoteIdx].quote]
 }
 
 async function removeCurrentWordAndQuote(quotes, words) {
@@ -85,6 +85,7 @@ export default async (request: VercelRequest, response: VercelResponse) => {
 
   // await removeCurrentWordAndQuote(quotes, words)
   // response.status(200).json({})
+  // return
 
   const { lengthStr } = request.query
   let length: number
