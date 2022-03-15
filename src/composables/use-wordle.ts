@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { EvaluationState } from "@/utils/types"
 import { computed, ref } from "vue"
 import {
@@ -31,12 +32,12 @@ const allWords = [
 ]
 const uniqueWords = [...new Set(allWords)].map((w) => w.toUpperCase())
 
-function getWord(words: string[]) {
-  const randomWord = words[Math.floor(Math.random() * words.length)]
-  if (import.meta.env.DEV) {
-    console.info("The word to guess is:", randomWord)
-  }
-  return randomWord
+function getData() {
+  let data
+  axios.get('/api/getdailyword').then((res) => {
+    data = res.data
+  })
+  return data
 }
 
 function getValidWords(length: number) {
@@ -47,7 +48,9 @@ function getValidWords(length: number) {
 export function useWordle(length = ref(5)) {
   const availableLengths = [3, 4, 5, 6, 7, 8]
   const validWords = ref(getValidWords(length.value))
-  const word = ref(getWord(validWords.value))
+  const data = getData()
+  const word = data.current_word
+  const quote = data.current_quote
 
   const numGuesses = computed(() => {
     return word.value.length + 1
@@ -98,7 +101,7 @@ export function useWordle(length = ref(5)) {
 
   function reset() {
     validWords.value = getValidWords(length.value)
-    word.value = getWord(validWords.value)
+    word.value = getData().current_word
   }
 
   return {

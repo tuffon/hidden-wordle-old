@@ -1,6 +1,6 @@
 <template>
   <header class="appheader">
-    <p class="appheader__text typed-out"><img style="height: 200px;" src="../assets/hiddenwordlelogo1.png" /></p>
+    <p class="appheader__text typed-out"><img style="height: 65px; margin-bottom: 30px" src="../assets/hiddenwordle.png" /></p>
   </header>
 </template>
 
