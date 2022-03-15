@@ -52,7 +52,7 @@ async function chooseNewWordAndQuote(quotes, words, length: number) {
 
   // set the quote as chosen
   await quotes.updateOne(
-    { id: quoteId },
+    { id: availableQuotes[quoteId].id },
     {
       $set: { current: true },
     }
