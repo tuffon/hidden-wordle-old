@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from "axios"
 import { EvaluationState, ApiResult } from "@/utils/types"
 import { computed, ref } from "vue"
 import {
@@ -34,7 +34,7 @@ const uniqueWords = [...new Set(allWords)].map((w) => w.toUpperCase())
 
 function getData(): ApiResult {
   let data
-  axios.get('/api/getdailyword').then((res) => {
+  axios.get("/api/getdailyword").then((res) => {
     data = res.data
   })
   return data || { current_word: "test", current_quote: "blastoff" }
